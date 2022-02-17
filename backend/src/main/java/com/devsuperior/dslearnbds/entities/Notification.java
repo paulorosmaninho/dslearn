@@ -18,7 +18,6 @@ public class Notification implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "notification_id")
 	private Long id;
 	private String text;
 	private Instant moment;
