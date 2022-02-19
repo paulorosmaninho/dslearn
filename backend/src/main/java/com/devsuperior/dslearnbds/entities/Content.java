@@ -1,5 +1,6 @@
 package com.devsuperior.dslearnbds.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -9,7 +10,10 @@ public class Content extends Lesson {
 
 	private static final long serialVersionUID = 1L;
 
+	@Column(name = "text_content")
 	private String textContent;
+	
+	@Column(name = "video_uri")
 	private String videoUri;
 
 	public Content() {

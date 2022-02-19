@@ -38,7 +38,7 @@ public abstract class Lesson implements Serializable {
 
 	// A tabela de associação TB_LESSON_DONE terá 3 colunas na chave
 	@ManyToMany
-	@JoinTable(name = "tb_lesson_done", 
+	@JoinTable(name = "tb_lessons_done", 
 			joinColumns = @JoinColumn(name = "lesson_id"),
 			// A classe Enrollment possui uma chave composta de dois campos
 			inverseJoinColumns = { 
