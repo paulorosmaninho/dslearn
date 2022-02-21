@@ -39,28 +39,15 @@ public class User implements Serializable {
 	private List<Notification> notifications = new ArrayList<>();
 
 	
-//	@OneToMany(mappedBy = "author")
-//	private Topic topic;
-//
-//	@ManyToMany(mappedBy = "")
-//	private Set<Topic> likes = new HashSet<>();
-//	
-//	
-//	@OneToMany(mappedBy = "author")
-//	private Reply reply;
-	
-	
-	
 	public User() {
 	}
 
-	public User(Long id, String name, String email, String password, Set<Role> roles) {
+	public User(Long id, String name, String email, String password) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
-		this.roles = roles;
 	}
 
 	public Long getId() {

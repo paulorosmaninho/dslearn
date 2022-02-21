@@ -40,7 +40,7 @@ public class Enrollment implements Serializable {
 	private Set<Lesson> lessonsDone = new HashSet<>();
 
 	@OneToMany(mappedBy = "enrollment")
-	private List<Deliver> delivers = new ArrayList<>();
+	private List<Deliver> deliveries = new ArrayList<>();
 
 	public Enrollment() {
 	}
@@ -56,11 +56,11 @@ public class Enrollment implements Serializable {
 		this.onlyUpdate = onlyUpdate;
 	}
 
-	public User getUser() {
+	public User getStudent() {
 		return id.getUser();
 	}
 
-	public void setUser(User user) {
+	public void setStudent(User user) {
 		id.setUser(user);
 	}
 
@@ -108,8 +108,33 @@ public class Enrollment implements Serializable {
 		return lessonsDone;
 	}
 
-	public List<Deliver> getDelivers() {
-		return delivers;
+	public List<Deliver> getDeliveries() {
+		return deliveries;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Enrollment other = (Enrollment) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 }
