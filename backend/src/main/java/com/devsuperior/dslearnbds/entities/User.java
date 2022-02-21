@@ -167,4 +167,18 @@ public class User implements UserDetails, Serializable {
 		return true;
 	}
 
+	
+	// Verificar se o nome do Role passado existe para esse usuário
+	public boolean hasRole(String roleName) {
+
+		for (Role role : roles) {
+			if (role.getAuthority().equals(roleName)) {
+				return true;
+			}
+		}
+
+		return false;
+
+	}
+
 }

@@ -40,6 +40,9 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private RoleRepository roleRepository;
 
+	@Autowired
+	private AuthService authService;
+	
 	// Injetar o BCryptPasswordEncoder que foi definido como
 	// Bean no pacote config
 	@Autowired
@@ -58,6 +61,9 @@ public class UserService implements UserDetailsService {
 
 	@Transactional(readOnly = true)
 	public UserDTO findById(Long id) {
+		
+		//Valida se o usuário logado é ele mesmo ou admin
+		authService.validateSelfOrAdmin(id);
 
 		Optional<User> objOptional = userRepository.findById(id);
 

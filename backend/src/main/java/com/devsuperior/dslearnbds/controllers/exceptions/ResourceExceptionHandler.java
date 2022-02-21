@@ -16,7 +16,6 @@ import com.devsuperior.dslearnbds.services.exceptions.ForbiddenException;
 import com.devsuperior.dslearnbds.services.exceptions.ResourceNotFoundException;
 import com.devsuperior.dslearnbds.services.exceptions.UnauthorizedException;
 
-
 @ControllerAdvice
 public class ResourceExceptionHandler {
 
@@ -72,8 +71,7 @@ public class ResourceExceptionHandler {
 
 		return ResponseEntity.status(status).body(stdError);
 	}
-	
-	
+
 	@ExceptionHandler(ForbiddenException.class)
 	public ResponseEntity<OAuthCustomError> forbiddenError(ForbiddenException e, HttpServletRequest request) {
 		String error = "Forbidden";
@@ -91,15 +89,11 @@ public class ResourceExceptionHandler {
 		String error = "Unauthorized";
 		HttpStatus status = HttpStatus.UNAUTHORIZED;
 		OAuthCustomError oauthError = new OAuthCustomError();
-		
+
 		oauthError.setError(error);
 		oauthError.setErrorDescription(e.getMessage());
-		
+
 		return ResponseEntity.status(status).body(oauthError);
 	}
-	
-	
-	
-	
-	
+
 }
