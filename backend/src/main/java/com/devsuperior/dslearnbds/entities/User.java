@@ -38,6 +38,19 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "user")
 	private List<Notification> notifications = new ArrayList<>();
 
+	
+//	@OneToMany(mappedBy = "author")
+//	private Topic topic;
+//
+//	@ManyToMany(mappedBy = "")
+//	private Set<Topic> likes = new HashSet<>();
+//	
+//	
+//	@OneToMany(mappedBy = "author")
+//	private Reply reply;
+	
+	
+	
 	public User() {
 	}
 
