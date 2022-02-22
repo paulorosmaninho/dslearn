@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -45,9 +46,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Autowired
 	private AuthenticationManager autenticationManager;
 
-	
 	@Autowired
 	private JwtTokenEnhancer jwtTokenEnhancer;
+	
+	@Autowired
+	private UserDetailsService userDetailsService;
 	
 	
 	@Override
@@ -61,11 +64,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
 		clients.inMemory().withClient(clientId) /* Nome da aplicação */
-				.secret(passwordEncoder.encode(clientSecret)) /*Senha da aplicação criptografada. Temporariamente fixa*/
+				.secret(passwordEncoder.encode(clientSecret)) /*Senha da aplicação criptografada*/
 				.scopes("read", "write") /* Escopo de acesso. Leitura e Escrita */
-				.authorizedGrantTypes("password") /* Tipo de autorização = password */
-				.accessTokenValiditySeconds(jwtDuration); /* Tempo de validade do token em segundos */
-
+				.authorizedGrantTypes("password", "refresh_token") /* Tipos de autorizações = password e refresh_token*/
+				.accessTokenValiditySeconds(jwtDuration) /* Tempo de validade do token de autenticação em segundos */
+				.refreshTokenValiditySeconds(jwtDuration); /* Tempo de validade do refresh token em segundos */
 	}
 
 	@Override
@@ -81,7 +84,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		endpoints.authenticationManager(autenticationManager).tokenStore(tokenStore)
 				.accessTokenConverter(accessTokenConverter)
 				//Adicionando mais informações do usuário com token enhancer
-				.tokenEnhancer(chain);
+				.tokenEnhancer(chain)
+				//Adicionado userDetailsService junto com inclusão do refresh_token
+				.userDetailsService(userDetailsService);
 	}
 
 }
