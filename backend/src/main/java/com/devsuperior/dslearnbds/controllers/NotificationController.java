@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -27,9 +28,11 @@ public class NotificationController {
 	NotificationService notificationService;
 
 	@GetMapping
-	public ResponseEntity<Page<NotificationDTO>> findAll(Pageable pageable) {
+	public ResponseEntity<Page<NotificationDTO>> findAll(
+			Pageable pageable, 
+			@RequestParam(name = "unreadOnly", defaultValue = "false") Boolean unreadOnly) {
 
-		Page<NotificationDTO> pageDto = notificationService.notificationsForCurrentUserPaged(pageable);
+		Page<NotificationDTO> pageDto = notificationService.notificationsForCurrentUserPaged(pageable, unreadOnly);
 
 		return ResponseEntity.ok().body(pageDto);
 
